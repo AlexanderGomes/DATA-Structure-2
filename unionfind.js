@@ -1,69 +1,51 @@
+// this is the only function you need to study union find
+
 var countComponents = function (n, edges) {
-  let arr = [];
+  const parent = Array.from({ length: n }, (_, i) => i);
+  const rank = Array.from({ length: n }, () => 0);
+  let output = n;
 
-  for (let i = 0; i < n; i++) {
-    arr[i] = i;
-  }
+  
+  // find w/ path compression
+  // find parent of x
+  const find = (x) => {
+    while (x != parent[x]) {
+      //path compression
+      parent[x] = parent[parent[x]];
 
- // setting the second element to be equal it's root
- // [0, 0],[0], [3], [3] example: 1 becomes 0, 2 becomes 1 and then 1 becomes 0, 4 becomes 3, so wwe have two groups 0's and 3, that's how many connections we have
-  const union = (i, j) => {
-    let a = find(i);
-    let b = find(j);
-
-    if (a !== b) {
-      arr[b] = a;
+      x = parent[x];
     }
+
+    return x;
   };
 
-  const find = (val) => {
-    while (val !== arr[val]) {
-      val = arr[val];
+  // union by rank
+  const union = (x, y) => {
+    const X = find(x); // root x
+    const Y = find(y); // root y
+
+    if (X === Y) return; // if same parent, stop
+
+    // union by rank
+    if (rank[Y] > rank[X]) parent[X] = Y;
+    else if (rank[X] > rank[Y]) parent[Y] = X;
+    else {
+      parent[Y] = X;
+      rank[X]++;
     }
-    return val;
+
+    output--; // after merging, decrement count. We know that we have 1 less component since we just merged one.
   };
 
-  for (let [a, b] of edges) {
-    union(a, b);
+  for (const [u, v] of edges) {
+    union(u, v);
   }
 
-  console.log(arr);
-  //getting the length of different groups
-  return arr.filter((val, i) => val === i).length;
+  return output;
 };
 
-countComponents(5, [
-  [0, 1],
-  [1, 2],
-  [2, 3],
-  [3, 4],
-]);
 
 
-// the variation using a count or so called rank, so you don't have totally unbalenced tree's
-// the rank is used to measuer the size of each tree, if yp is bigger than xp then you want to set the root node of xp to be equal yp (root node of yp)
-// this is called path compression
-class UF {
-  constructor(N) {
-    this.parent = new Array.from({ length: N }, (_, i) => i);
-    this.count = new Array(N).fill(1);
-  }
-
-  find(x) {
-    if (this.parent[x] != x) this.parent[x] = this.find(this.parent[x]);
-    return this.parent[x];
-  }
-
-  union(x, y) {
-    const xp = this.find(x), yp = this.find(y);
-    if (xp == yp) return;
-
-    if (this.count[xp] < this.count[yp]) {
-      this.parent[xp] = yp;
-      this.count[yp] += this.count[xp];
-    } else {
-      this.parent[yp] = xp;
-      this.count[xp] += this.count[yp];
-    }
-  }
-}
+// length // value
+const arr = Array.from({length: n}, (_, i) => i)
+const rank = Array.from({length: n}, () => 0)

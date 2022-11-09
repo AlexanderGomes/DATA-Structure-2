@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon unionfind.js"
+    "start": "nodemon unionfind.js",
+    "dev": "nodemon LinkedList.js"
+
   },
   "keywords": [],
   "author": "",
