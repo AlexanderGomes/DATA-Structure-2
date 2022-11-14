@@ -1,5 +1,3 @@
-// singly linked list
-
 class Node {
   constructor(element) {
     this.element = element;
@@ -13,16 +11,12 @@ class LinkedList {
     this.size = 0;
   }
 
-  //add to the last index
-  //if list is empty set head to be equal the element you're trying to add
-  // otherwise loop through the array until you find a null value
-
-  addLast(element) {
+  push(element) {
     const node = new Node(element);
-    let current = this.head;
 
     if (this.head == null) this.head = node;
     else {
+      let current = this.head;
       while (current.next !== null) {
         current = current.next;
       }
@@ -32,27 +26,25 @@ class LinkedList {
   }
 
   getElementAt(index) {
-    if (index >= 0 && index <= this.count) {
-      // {1}
-      let node = this.head; // {2}
+    if (index >= 0 && index <= this.size) {
+      let node = this.head;
       for (let i = 0; i < index && node != null; i++) {
-        // {3}
         node = node.next;
       }
-      return node; // {4}
+      return node;
     }
-    return undefined; // {5}
+    return undefined;
   }
 
-  //add element to the given index
-  addAny(element, index) {
-    let node = new Node(element);
-    if (index >= 0 && index < this.size) {
-      // first
+  insert(element, index) {
+    const node = new Node(element);
+    if (index >= 0 && index <= this.size) {
+      //add first
       if (index === 0) {
-        let current = this.head;
-        node.next = current;
+        node.next = this.head;
         this.head = node;
+
+        //add rest
       } else {
         const previous = this.getElementAt(index - 1);
         const current = previous.next;
@@ -64,4 +56,37 @@ class LinkedList {
     }
     return false;
   }
+
+  remove(index) {
+    if (index >= 0 && index < this.size) {
+      let current = this.head;
+      //remove first
+      if (index === 0) {
+        this.head = this.head.next;
+
+        //remove rest
+      } else {
+        let previous;
+        for (let i = 0; i < index; i++) {
+          previous = current;
+          current = current.next;
+        }
+        previous.next = current.next;
+      }
+    }
+    this.size--
+  }
 }
+
+const list = new LinkedList();
+list.push(1);
+list.push(2);
+list.push(3);
+list.push(4);
+list.push(5);
+list.push(6);
+
+list.insert(100, 3);
+// list.remove(3)
+
+console.log(list.getElementAt(0));

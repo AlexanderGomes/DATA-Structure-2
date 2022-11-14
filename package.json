@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon unionfind.js",
-    "dev": "nodemon LinkedList.js"
+    "dev": "nodemon LinkedCopy.js",
+    "linked": "nodemon LinkedList.js"
+
 
   },
   "keywords": [],

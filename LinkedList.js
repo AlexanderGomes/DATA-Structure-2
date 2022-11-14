@@ -45,16 +45,16 @@ class LinkedList {
         this.head = current.next;
       } else {
         let previous; // {4}
-        for (let i = 0; i < index; i++) {
+        for (let i = 0; i <= index; i++) {
           // {5}
           previous = current; // {6}
-          current = current.next; // {7}
+          current = current.next; // {7} //element we want to delete
         }
+
         // link previous with current's next: skip it to remove
-        previous.next = current.next; // {8}
+        previous.next = current.next;
       }
       this.count--; // {9}
-      return current.element;
     }
     return undefined; // {10}
   }
@@ -72,7 +72,7 @@ class LinkedList {
     return undefined; // {5}
   }
 
-  insert(element, index) {
+  insert2(element, index) {
     if (index >= 0 && index <= this.count) {
       // {1}
       const node = new Node(element);
@@ -145,7 +145,8 @@ class LinkedList {
 const list = new LinkedList();
 list.push(1);
 list.push(2);
-list.insert(3, 1)
-list.insert(5, 2)
+list.insert2(3, 0);
+list.insert2(3, 1);
 
-console.log(list.getElementAt(0))
+
+console.log(list.getElementAt(0));
