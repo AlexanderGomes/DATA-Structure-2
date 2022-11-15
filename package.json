@@ -6,9 +6,8 @@
   "scripts": {
     "start": "nodemon unionfind.js",
     "dev": "nodemon LinkedCopy.js",
-    "linked": "nodemon LinkedList.js"
-
-
+    "linked": "nodemon LinkedList.js",
+    "double": "nodemon doublyLinked.js"
   },
   "keywords": [],
   "author": "",

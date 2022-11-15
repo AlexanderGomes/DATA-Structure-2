@@ -14,21 +14,24 @@ class LinkedList {
   push(element) {
     const node = new Node(element);
 
+    let current = this.head;
+
     if (this.head == null) this.head = node;
     else {
-      let current = this.head;
       while (current.next !== null) {
         current = current.next;
       }
       current.next = node;
     }
+
     this.size++;
   }
 
   getElementAt(index) {
     if (index >= 0 && index <= this.size) {
       let node = this.head;
-      for (let i = 0; i < index && node != null; i++) {
+
+      for (let i = 0; i < index && node !== null; i++) {
         node = node.next;
       }
       return node;
@@ -36,45 +39,41 @@ class LinkedList {
     return undefined;
   }
 
-  insert(element, index) {
-    const node = new Node(element);
-    if (index >= 0 && index <= this.size) {
-      //add first
-      if (index === 0) {
-        node.next = this.head;
-        this.head = node;
 
-        //add rest
+  insert(element, index) {
+    const node = new Node(element)
+    if(index >= 0 && index <= this.size) {
+      if(index === 0) {
+        node.next = this.head
+        this.head = node
       } else {
-        const previous = this.getElementAt(index - 1);
-        const current = previous.next;
-        previous.next = node;
-        node.next = current;
+        let previous = this.getElementAt(index - 1)
+        let current = previous.next
+
+        previous.next = node
+        node.next = current
       }
-      this.size++;
-      return true;
+      this.size++
     }
-    return false;
   }
 
-  remove(index) {
-    if (index >= 0 && index < this.size) {
-      let current = this.head;
-      //remove first
-      if (index === 0) {
-        this.head = this.head.next;
 
-        //remove rest
+  remove(index) {
+    if(index >= 0 && index < this.size) {
+      let current = this.head
+      if(index === 0) {
+        this.head = this.head.next
       } else {
         let previous;
-        for (let i = 0; i < index; i++) {
-          previous = current;
-          current = current.next;
+
+        for(let i = 0; i < index; i++) {
+          previous = current
+          current = current.next
         }
-        previous.next = current.next;
+        previous.next = current.next
       }
+      this.size--
     }
-    this.size--
   }
 }
 
@@ -86,7 +85,7 @@ list.push(4);
 list.push(5);
 list.push(6);
 
-list.insert(100, 3);
-// list.remove(3)
+list.insert(100, 0);
+list.remove(3)
 
 console.log(list.getElementAt(0));
